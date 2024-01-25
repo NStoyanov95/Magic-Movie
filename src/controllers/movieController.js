@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const uniqid = require('uniqid');
 
 const movieService = require('../services/movieService');
 
@@ -20,7 +19,7 @@ router.post('/create', async (req, res) => {
     res.redirect('/');
 });
 
-router.get('/:id/details', async(req, res) => {
+router.get('/:id/details', async (req, res) => {
     const id = req.params.id;
     const movie = await movieService.getOne(id).lean();
     res.render('movie/details', { movie });
