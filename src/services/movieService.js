@@ -29,6 +29,6 @@ exports.search = (title, genre, year) => {
 
 exports.attach = async (movieId, castId) => {
     const movie = await this.getOne(movieId)
-    await movie.casts.push(castId);
+    movie.casts.push(castId);
     movie.save();
 }
