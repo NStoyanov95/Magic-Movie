@@ -24,4 +24,8 @@ const castSchema = new mongoose.Schema({
         type: String,
         match: /^https?:\/\/\w+/mg
     },
-})
+});
+
+const Cast = mongoose.model('Cast', castSchema);
+
+module.exports = Cast
