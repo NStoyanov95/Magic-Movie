@@ -6,10 +6,8 @@ exports.create = (movieData) => Movie.create(movieData)
 
 exports.getAll = () => Movie.find();
 
-exports.getOne = (id) => {
-    const movie = Movie.findById(id);
-    return movie
-}
+exports.getOne = (id) => Movie.findById(id);
+
 
 exports.search = (title, genre, year) => {
     let allMovies = this.getAll();
