@@ -4,13 +4,10 @@ const movies = [];
 
 exports.create = (movieData) => Movie.create(movieData)
 
-exports.getAll = () => {
-    const allMovies = movies.slice();
-    return allMovies;
-};
+exports.getAll = () => Movie.find();
 
 exports.getOne = (id) => {
-    const movie = movies.find(movie => movie.id == id);
+    const movie = Movie.findById(id);
     return movie
 }
 

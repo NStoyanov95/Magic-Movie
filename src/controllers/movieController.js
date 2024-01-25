@@ -16,13 +16,13 @@ router.get('/search', (req, res) => {
 
 router.post('/create', async (req, res) => {
     const movieData = req.body;
-  await movieService.create(movieData);
+    await movieService.create(movieData);
     res.redirect('/');
 });
 
-router.get('/:id/details', (req, res) => {
+router.get('/:id/details', async(req, res) => {
     const id = req.params.id;
-    const movie = movieService.getOne(id)
+    const movie = await movieService.getOne(id)
     res.render('movie/details', { movie });
 });
 
