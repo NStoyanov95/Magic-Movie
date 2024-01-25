@@ -1,8 +1,8 @@
+const Movie = require('../models/Movie');
+
 const movies = [];
 
-exports.create = (movieData) => {
-    movies.push(movieData);
-};
+exports.create = (movieData) => Movie.create(movieData)
 
 exports.getAll = () => {
     const allMovies = movies.slice();

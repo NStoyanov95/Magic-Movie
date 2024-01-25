@@ -14,10 +14,9 @@ router.get('/search', (req, res) => {
     res.render('search', { movies })
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
     const movieData = req.body;
-    movieData.id = uniqid();
-    movieService.create(movieData);
+  await movieService.create(movieData);
     res.redirect('/');
 });
 
