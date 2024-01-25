@@ -4,7 +4,7 @@ const uniqid = require('uniqid');
 const movieService = require('../services/movieService');
 
 router.get('/create', (req, res) => {
-    res.render('create');
+    res.render('movie/create');
 });
 
 router.get('/search', (req, res) => {
@@ -24,7 +24,7 @@ router.post('/create', (req, res) => {
 router.get('/:id/details', (req, res) => {
     const id = req.params.id;
     const movie = movieService.getOne(id)
-    res.render('details', { movie });
+    res.render('movie/details', { movie });
 });
 
 
