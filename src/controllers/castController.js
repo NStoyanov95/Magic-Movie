@@ -15,7 +15,7 @@ router.post('/attach/:id', async (req, res) => {
     const movieId = req.params.id;
 
     await movieService.attach(movieId, castId);
-    res.redirect(`/movie/${movieId}/details`)
+    res.redirect(`/movie/${movieId}/details`);
 });
 
 router.get('/create', (req, res) => {

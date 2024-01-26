@@ -3,17 +3,17 @@ const router = require('express').Router();
 const movieService = require('../services/movieService');
 
 router.get('/', async (req, res) => {
-    const movie = await movieService.getAll().lean()
+    const movie = await movieService.getAll().lean();
 
-    res.render('home', { movie });
+    res.render('home/home', { movie });
 });
 
 router.get('/about', (req, res) => {
-    res.render('about');
+    res.render('home/about');
 });
 
 router.get('/404', (req, res) => {
-    res.render('404');
+    res.render('home/404');
 });
 
 module.exports = router;

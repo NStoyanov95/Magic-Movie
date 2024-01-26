@@ -8,15 +8,14 @@ router.get('/create', (req, res) => {
 
 router.get('/search', async (req, res) => {
     const movies = await movieService.getAll().lean();
-    res.render('search', { movies });
+    res.render('movie/search', { movies });
 
 });
 
 router.post('/search', async (req, res) => {
     const { title, genre, year } = req.body;
     const movies = await movieService.search(title, genre, year);
-    console.log(movies);
-    res.render('search', { movies })
+    res.render('movie/search', { movies })
 });
 
 router.post('/create', async (req, res) => {
@@ -28,7 +27,6 @@ router.post('/create', async (req, res) => {
 router.get('/:id/details', async (req, res) => {
     const id = req.params.id;
     const movie = await movieService.getOne(id).lean().populate('casts');
-    console.log(movie);
     res.render('movie/details', { movie });
 });
 
