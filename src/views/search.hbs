@@ -2,7 +2,7 @@
 <main>
     <section id="search">
         <h1>Search</h1>
-        <form action="/movie/search" method="GET" class="form">
+        <form action="/movie/search" method="POST" class="form">
             <input type="text" class="search" name="title"
                 placeholder="Title...">
             <input type="text" name="genre" class="genre"
@@ -20,11 +20,11 @@
                         alt="Jungle-Couise">
                 </div>
                 <div class="back">
-                    <h1>{{name}}</h1>
+                    <h1>{{title}}</h1>
                     <h2>Genre: {{genre}}</h2>
                     <p>Description: {{description}}
                     </p>
-                    <a href="/movie/{{id}}/details" class="details">Details</a>
+                    <a href="/movie/{{_id}}/details" class="details">Details</a>
                 </div>
             </div>
             {{else}}

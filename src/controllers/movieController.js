@@ -6,10 +6,16 @@ router.get('/create', (req, res) => {
     res.render('movie/create');
 });
 
-router.get('/search', (req, res) => {
-    const { title, genre, year } = req.query;
-    const movies = movieService.search(title, genre, year);
+router.get('/search', async (req, res) => {
+    const movies = await movieService.getAll().lean();
+    res.render('search', { movies });
 
+});
+
+router.post('/search', async (req, res) => {
+    const { title, genre, year } = req.body;
+    const movies = await movieService.search(title, genre, year);
+    console.log(movies);
     res.render('search', { movies })
 });
 

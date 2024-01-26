@@ -9,26 +9,26 @@ exports.getAll = () => Movie.find();
 exports.getOne = (id) => Movie.findById(id);
 
 
-exports.search = (title, genre, year) => {
+exports.search = async (title, genre, year) => {
     let allMovies = this.getAll();
 
     if (title) {
-        allMovies = allMovies.filter(movie => movie.title.toLowerCase().includes(title.toLowerCase()));
+        allMovies = await allMovies.find({ title }).lean();
     };
 
     if (genre) {
-        allMovies = allMovies.filter(movie => movie.genre == genre);
+        allMovies = await allMovies.find({ genre }).lean();
     };
 
     if (year) {
-        allMovies = allMovies.filter(movie => movie.year == year);
+        allMovies = await allMovies.find({ year }).lean();
     };
 
     return allMovies;
 }
 
 exports.attach = async (movieId, castId) => {
-    const movie = await this.getOne(movieId)
+    const movie = await this.getOne(movieId);
     movie.casts.push(castId);
     movie.save();
 }
