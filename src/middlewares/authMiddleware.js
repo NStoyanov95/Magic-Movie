@@ -24,4 +24,14 @@ const auth = async function (req, res, next) {
 
 }
 
-module.exports = auth;
+const isAuth = function (req, res, next) {
+    const token = req.cookies['auth'];
+
+    if (!token) {
+       return res.redirect('/auth/login');
+    }
+
+    next();
+}
+
+module.exports = { auth, isAuth };
