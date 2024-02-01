@@ -17,10 +17,16 @@ router.get('/login', (req, res) => {
     res.render('auth/login');
 });
 
-router.post('/login', async(req, res) => {
-    const {email, password} = req.body;
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
 
-   const token = await authService.login(email, password);
+    const token = await authService.login(email, password);
+
+    res.cookie('auth', token, { httpOnly: true });
+    
+    const user = req.user
+
+    console.log(user);
 
     res.redirect('/');
 })
