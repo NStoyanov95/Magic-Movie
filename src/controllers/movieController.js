@@ -26,9 +26,10 @@ router.post('/create', async (req, res) => {
 });
 
 router.get('/:id/details', async (req, res) => {
-    const id = req.params.id;
-    const movie = await movieService.getOne(id).lean().populate('casts');
-    res.render('movie/details', { movie });
+    const movie = await movieService.getOne(req.params.id).lean().populate('casts');
+
+    const isOwner = req.user?._id == movie.owner?._id;
+    res.render('movie/details', { movie, isOwner });
 });
 
 router.get('/:id/edit', async (req, res) => {
