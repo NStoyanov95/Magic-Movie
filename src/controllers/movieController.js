@@ -30,5 +30,10 @@ router.get('/:id/details', async (req, res) => {
     res.render('movie/details', { movie });
 });
 
+router.get('/:id/edit', async (req, res) => {
+    const movie = await movieService.getOne(req.params.id).lean();
+
+    res.render('movie/edit', { movie })
+})
 
 module.exports = router;
