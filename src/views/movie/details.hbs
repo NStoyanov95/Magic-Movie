@@ -36,25 +36,25 @@
 
         <div class="main-cast-card">
             {{#if casts}}
-            {{#each movie.casts}}
-            <div class="cast-card">
-                <div class="card-img">
-                    <img
-                        src="{{castImage}}"
-                        alt="cast">
+                {{#each movie.casts}}
+                <div class="cast-card">
+                    <div class="card-img">
+                        <img
+                            src="{{castImage}}"
+                            alt="cast">
+                    </div>
+                    <div class="cast-info">
+                        <h1>{{name}}</h1>
+                        <h3>Age: {{age}}</h3>
+                        <h3>Born: {{born}}</h3>
+                        <h3>Name in Movie: {{nameInMovie}}</h3>
+                    </div>
                 </div>
-                <div class="cast-info">
-                    <h1>{{name}}</h1>
-                    <h3>Age: {{age}}</h3>
-                    <h3>Born: {{born}}</h3>
-                    <h3>Name in Movie: {{nameInMovie}}</h3>
-                </div>
-            </div>
-            {{/each}}
+                {{/each}}
             {{else}}
-            <div class="no-cast">
-                <p>There are no casts added yet...</p>
-            </div>
+                <div class="no-cast">
+                    <p>There are no casts added yet...</p>
+                </div>
             {{/if}}
         </div>
 
