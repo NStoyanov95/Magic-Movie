@@ -4,6 +4,8 @@ const movies = [];
 
 exports.create = (movieData) => Movie.create(movieData);
 
+exports.delete = (movieId) => Movie.findByIdAndDelete(movieId);
+
 exports.edit = (id, movieData)=> Movie.findByIdAndUpdate(id, movieData);
 
 exports.getAll = () => Movie.find();

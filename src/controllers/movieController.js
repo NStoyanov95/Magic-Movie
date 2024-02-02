@@ -20,6 +20,7 @@ router.post('/search', async (req, res) => {
 
 router.post('/create', async (req, res) => {
     const movieData = req.body;
+    movieData.owner = req.user._id;
     await movieService.create(movieData);
     res.redirect('/');
 });
@@ -33,15 +34,21 @@ router.get('/:id/details', async (req, res) => {
 router.get('/:id/edit', async (req, res) => {
     const movie = await movieService.getOne(req.params.id).lean();
 
-    res.render('movie/edit', { movie }); 
+    res.render('movie/edit', { movie });
 });
 
-router.post('/:id/edit', async (req,res)=>{
+router.post('/:id/edit', async (req, res) => {
     const movieData = req.body;
 
-   await movieService.edit(req.params.id, movieData);
+    await movieService.edit(req.params.id, movieData);
 
-   res.redirect(`/movie/${req.params.id}/details`);
+    res.redirect(`/movie/${req.params.id}/details`);
 });
+
+router.get('/:id/delete', async (req, res) => {
+    await movieService.delete(req.params.id);
+
+    res.redirect('/')
+})
 
 module.exports = router;
