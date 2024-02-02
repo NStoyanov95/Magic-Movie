@@ -24,7 +24,7 @@ router.post('/create', async (req, res) => {
     res.redirect('/');
 });
 
-router.get('/:id/details',isAuth, async (req, res) => {
+router.get('/:id/details', async (req, res) => {
     const id = req.params.id;
     const movie = await movieService.getOne(id).lean().populate('casts');
     res.render('movie/details', { movie });
