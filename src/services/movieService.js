@@ -2,7 +2,9 @@ const Movie = require('../models/Movie');
 
 const movies = [];
 
-exports.create = (movieData) => Movie.create(movieData)
+exports.create = (movieData) => Movie.create(movieData);
+
+exports.edit = (id, movieData)=> Movie.findByIdAndUpdate(id, movieData);
 
 exports.getAll = () => Movie.find();
 
@@ -25,10 +27,10 @@ exports.search = async (title, genre, year) => {
     };
 
     return allMovies;
-}
+};
 
 exports.attach = async (movieId, castId) => {
     const movie = await this.getOne(movieId);
     movie.casts.push(castId);
     movie.save();
-}
+};

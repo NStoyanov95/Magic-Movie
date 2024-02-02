@@ -33,7 +33,15 @@ router.get('/:id/details', async (req, res) => {
 router.get('/:id/edit', async (req, res) => {
     const movie = await movieService.getOne(req.params.id).lean();
 
-    res.render('movie/edit', { movie })
-})
+    res.render('movie/edit', { movie }); 
+});
+
+router.post('/:id/edit', async (req,res)=>{
+    const movieData = req.body;
+
+   await movieService.edit(req.params.id, movieData);
+
+   res.redirect(`/movie/${req.params.id}/details`);
+});
 
 module.exports = router;
