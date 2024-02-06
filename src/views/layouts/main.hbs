@@ -9,6 +9,11 @@
     </head>
     <body>
         <div id="box">
+            {{#if error}}
+            <div class="error-contaner">
+                <p>{{error}}</p>
+            </div>
+            {{/if}}
             <nav>
                 <!-- Do not forget to change the path to the image -->
                 <img
