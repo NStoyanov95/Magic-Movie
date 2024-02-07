@@ -3,15 +3,21 @@ const mongoose = require('mongoose');
 const movieSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        minLength: [5, "Title should be at least 5 characters long"],
+        match: [/^[\w\s]+$/, 'Title can only contain English letters and numbers.']
     },
     genre: {
         type: String,
         required: true,
+        minLength: [5, "Genre should be at least 5 characters long"],
+        match: [/^[\w\s]+$/, 'Genre can only contain English letters and numbers.']
     },
     director: {
         type: String,
-        required: true
+        required: true,
+        minLength: [5, "Director should be at least 5 characters long"],
+        match: [/^[\w\s]+$/, 'Director can only contain English letters and numbers.']
     },
     year: {
         type: Number,
@@ -28,12 +34,13 @@ const movieSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true,
-        maxLength: 200
+        minLength: [20, "Description should be at least 20 characters long"],
+        match: [/^[\w\s]+$/, 'Description can only contain English letters and numbers.'],
     },
     imageUrl: {
         type: String,
         require: true,
-        match: /^https?:\/\/\w+/mg
+        match: [/^https?:\/\/\w+/mg, 'Please enter valid URL.'],
     },
     casts: [{
         type: mongoose.Types.ObjectId,
