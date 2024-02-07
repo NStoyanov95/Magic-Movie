@@ -4,7 +4,9 @@ const { isAuth } = require('../middlewares/authMiddleware');
 const castService = require('../services/castService');
 const movieService = require('../services/movieService');
 
-router.get('/attach/:id',isAuth, async (req, res) => {
+const errorUtils = require('../utils/erroUtils');
+
+router.get('/attach/:id', isAuth, async (req, res) => {
     const movie = await movieService.getOne(req.params.id).lean();
     const casts = await castService.getAll().lean();
 
@@ -19,16 +21,20 @@ router.post('/attach/:id', async (req, res) => {
     res.redirect(`/movie/${movieId}/details`);
 });
 
-router.get('/create',isAuth, (req, res) => {
+router.get('/create', isAuth, (req, res) => {
     res.render('cast/create');
 });
 
 router.post('/create', async (req, res) => {
     const castData = req.body;
 
-    await castService.create(castData);
-
-    res.redirect('/')
+    try {
+        await castService.create(castData);
+        res.redirect('/');
+    } catch (error) {
+        const message = errorUtils.getErrorMessage(error);
+        res.render('cast/create', { error: message })
+    }
 });
 
 module.exports = router;
