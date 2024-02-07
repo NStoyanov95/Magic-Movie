@@ -7,18 +7,28 @@ const movieService = require('../services/movieService');
 const errorUtils = require('../utils/erroUtils');
 
 router.get('/attach/:id', isAuth, async (req, res) => {
-    const movie = await movieService.getOne(req.params.id).lean();
-    const casts = await castService.getAll().lean();
 
-    res.render('cast/attach', { movie, casts });
+    try {
+        const movie = await movieService.getOne(req.params.id).lean();
+        const casts = await castService.getAll().lean();
+        res.render('cast/attach', { movie, casts });
+
+    } catch (error) {
+        res.redirect('404')
+    }
 });
 
 router.post('/attach/:id', async (req, res) => {
     const castId = req.body.cast;
     const movieId = req.params.id;
 
-    await movieService.attach(movieId, castId);
-    res.redirect(`/movie/${movieId}/details`);
+    try {
+        await movieService.attach(movieId, castId);
+        res.redirect(`/movie/${movieId}/details`);
+    } catch (error) {
+        const message = errorUtils.getErrorMessage(error);
+        res.render('cast/attach', { error: message });
+    }
 });
 
 router.get('/create', isAuth, (req, res) => {

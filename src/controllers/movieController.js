@@ -22,8 +22,12 @@ router.post('/create', async (req, res) => {
 });
 
 router.get('/search', async (req, res) => {
-    const movies = await movieService.getAll().lean();
-    res.render('movie/search', { movies });
+    try {
+        const movies = await movieService.getAll().lean();
+        res.render('movie/search', { movies });
+    } catch (error) {
+        res.redirect('/404');
+    }
 
 });
 
@@ -35,16 +39,27 @@ router.post('/search', async (req, res) => {
 
 
 router.get('/:id/details', async (req, res) => {
-    const movie = await movieService.getOne(req.params.id).lean().populate('casts');
-    const casts = movie.casts.length > 0;
-    const isOwner = req.user?._id == movie.owner?._id;
-    res.render('movie/details', { movie, isOwner, casts });
+
+    try {
+        const movie = await movieService.getOne(req.params.id).lean().populate('casts');
+        const casts = movie.casts.length > 0;
+        const isOwner = req.user?._id == movie.owner?._id;
+        res.render('movie/details', { movie, isOwner, casts });
+        
+    } catch (error) {
+        const message = errorUtils.getErrorMessage(error);
+        res.render('movie/404', {error: message})
+    }
 });
 
 router.get('/:id/edit', async (req, res) => {
-    const movie = await movieService.getOne(req.params.id).lean();
-
-    res.render('movie/edit', { movie });
+    try {
+        const movie = await movieService.getOne(req.params.id).lean();
+        res.render('movie/edit', { movie });
+        
+    } catch (error) {
+        res.redirect('/404');
+    }
 });
 
 router.post('/:id/edit', async (req, res) => {
@@ -56,9 +71,13 @@ router.post('/:id/edit', async (req, res) => {
 });
 
 router.get('/:id/delete', async (req, res) => {
-    await movieService.delete(req.params.id);
-
-    res.redirect('/')
+    try {
+        await movieService.delete(req.params.id);
+        res.redirect('/')
+        
+    } catch (error) {
+        res.redirect('/404')
+    }
 })
 
 module.exports = router;
