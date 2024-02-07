@@ -9,16 +9,16 @@ router.get('/register', (req, res) => {
 
 router.post('/register', async (req, res) => {
     const userData = req.body;
-    
+
     try {
         await authService.register(userData);
         res.redirect('/');
-        
+
     } catch (err) {
         const message = errorUtils.getErrorMessage(err)
-        res.render('auth/register', {error: message});
+        res.render('auth/register', { error: message });
     }
-    
+
 });
 
 router.get('/login', (req, res) => {
@@ -27,17 +27,19 @@ router.get('/login', (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
+    try {
+        const token = await authService.login(email, password);
+        res.cookie('auth', token, { httpOnly: true });
+        const user = req.user;
+        res.redirect('/');
 
-    const token = await authService.login(email, password);
-
-    res.cookie('auth', token, { httpOnly: true });
-
-    const user = req.user;
-
-    res.redirect('/');
+    } catch (error) {
+        const message = errorUtils.getErrorMessage(error);
+        res.render('auth/login', { error: message })
+    }
 });
 
-router.get('/logout', (req,res)=>{
+router.get('/logout', (req, res) => {
     res.clearCookie('auth');
     res.redirect('/')
 });
